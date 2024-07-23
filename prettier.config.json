@@ -6,6 +6,5 @@
   "bracketSpacing": false,
   "bracketSameLine": false,
   "trailingComma": "none",
-  "arrowParens": "avoid",
-  "plugins": ["prettier-plugin-tailwindcss"]
+  "arrowParens": "avoid"
 }
