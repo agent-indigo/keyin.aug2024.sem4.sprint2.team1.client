@@ -1,6 +1,19 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react'
+import {BASE_URL} from '../urls'
 const apiSlice = createApi({
-  baseQuery: fetchBaseQuery({}),
+  baseQuery: fetchBaseQuery({
+    baseUrl: BASE_URL
+  }),
+  tagTypes: [
+    'addresses',
+    'agencies',
+    'contacts',
+    'emails',
+    'locations',
+    'phones',
+    'vehicles',
+    'rentals'
+  ],
   endpoints: builder => ({})
 })
 export default apiSlice
