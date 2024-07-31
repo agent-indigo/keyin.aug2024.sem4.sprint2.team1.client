@@ -1,0 +1,10 @@
+version: '3.8'
+services:
+  bark-web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: bark-web:latest
+    ports:
+      - "80:80"
+      - "443:443"
