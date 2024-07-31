@@ -88,6 +88,7 @@ const phonesApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: [
         'contact',
+        'location',
         'phone'
       ]
     }),
@@ -99,6 +100,7 @@ const phonesApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: [
         'contact',
+        'location',
         'phone'
       ]
     }),
@@ -121,6 +123,7 @@ const phonesApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: [
         'contact',
+        'location',
         'phone'
       ]
     }),
@@ -143,6 +146,7 @@ const phonesApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: [
         'contact',
+        'location',
         'phone'
       ]
     }),
@@ -154,6 +158,7 @@ const phonesApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: [
         'contact',
+        'location',
         'phone'
       ]
     }),
@@ -165,6 +170,7 @@ const phonesApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: [
         'contact',
+        'location',
         'phone'
       ]
     }),
@@ -176,6 +182,7 @@ const phonesApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: [
         'contact',
+        'location',
         'phone'
       ]
     }),
@@ -186,6 +193,7 @@ const phonesApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: [
         'contact',
+        'location',
         'phone'
       ]
     }),
@@ -196,6 +204,7 @@ const phonesApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: [
         'contact',
+        'location',
         'phone'
       ]
     })
