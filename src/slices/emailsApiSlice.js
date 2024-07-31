@@ -1,6 +1,5 @@
-import { EMAILS_URL } from "../urls";
-import apiSlice from "./apiSlice";
-
+import {EMAILS_URL} from "../urls"
+import apiSlice from "./apiSlice"
 const emailsApiSlice = apiSlice.injectEndpoints ({
   endpoints: builder => ({
     getAll: builder.query({
@@ -8,49 +7,49 @@ const emailsApiSlice = apiSlice.injectEndpoints ({
         url: EMAILS_URL,
         method: 'GET'
       }),
-      providesTags: ['emails']
+      providesTags: ['email']
     }),
     getByPk: builder.query({
       query: pk => ({
         url: `${EMAILS_URL}/${pk}`,
         method: 'GET'
       }),
-      providesTags: ['emails']
+      providesTags: ['email']
     }),
     getByAddress: builder.query({
       query: address => ({
         url: `${EMAILS_URL}/${address}`,
         method: 'GET'
       }),
-      providesTags: ['emails']
+      providesTags: ['email']
     }),
     getByContact: builder.query({
       query: contact => ({
         url: `${EMAILS_URL}/${contact}`,
         method: 'GET'
       }),
-      providesTags: ['emails']
+      providesTags: ['email']
     }),
     getByCategory: builder.query({
       query: category => ({
         url: `${EMAILS_URL}/${category}`,
         method: 'GET'
       }),
-      providesTags: ['emails']
+      providesTags: ['email']
     }),
     getActive: builder.query({
       query: () => ({
         url: `${EMAILS_URL}/active`,
         method: 'GET'
       }),
-      providesTags: ['emails']
+      providesTags: ['email']
     }),
     getInactive: builder.query({
       query: () => ({
         url: `${EMAILS_URL}/inactive`,
         method: 'GET'
       }),
-      providesTags: ['emails']
+      providesTags: ['email']
     }),
     add: builder.mutation({
       query: email => ({
@@ -59,10 +58,8 @@ const emailsApiSlice = apiSlice.injectEndpoints ({
         body: email
       }),
       invalidatesTags: [
-        'category',
         'contact',
-        'address',
-        'emails'
+        'email'
       ]
     }),
     editAddress: builder.mutation({
@@ -72,10 +69,8 @@ const emailsApiSlice = apiSlice.injectEndpoints ({
         body: address
       }),
       invalidatesTags: [
-        'category',
         'contact',
-        'address',
-        'emails'
+        'email'
       ]
     }),
     editCategory: builder.mutation({
@@ -85,10 +80,8 @@ const emailsApiSlice = apiSlice.injectEndpoints ({
         body: category
       }),
       invalidatesTags: [
-        'category',
         'contact',
-        'address',
-        'emails'
+        'email'
       ]
     }),
     activate: builder.query({
@@ -96,18 +89,23 @@ const emailsApiSlice = apiSlice.injectEndpoints ({
         url: `${EMAILS_URL}/${pk}/activate`,
         method: 'GET'
       }),
-      providesTags: ['emails']
+      invalidatesTags: [
+        'contact',
+        'email'
+      ]
     }),
     deactivate: builder.query({
       query: pk => ({
         url: `${EMAILS_URL}/${pk}/deactivate`,
         method: 'GET'
       }),
-      providesTags: ['emails']
+      invalidatesTags: [
+        'contact',
+        'email'
+      ]
     })
   })
 })
-
 export const {
   useGetAllQuery,
   useLazyGetAllQuery,
