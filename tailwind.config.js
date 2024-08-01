@@ -1,15 +1,11 @@
-const { BiFontFamily } = require("react-icons/bi");
-
-module.exports = {
-  content: [
-    './src/**/*.{js,jsx,ts,tsx}', 
-  ],
+const tailwindConfig = {
+  content: ['./src/**/*.jsx'],
   theme: {
     extend: {
       fontFamily: {
-        'teko': ['Teko', 'sans-serif'],
+        'teko': ['Teko', 'sans-serif']
       }
-    },
-  },
-  plugins: [],
-};
+    }
+  }
+}
+export default tailwindConfig
