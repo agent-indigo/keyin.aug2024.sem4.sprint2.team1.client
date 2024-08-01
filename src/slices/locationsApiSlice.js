@@ -1,10 +1,10 @@
-import { LOCATIONS_URL } from "../urls";
-import apiSlice from "./apiSlice";
+import {LOCATIONS_URL} from "../urls"
+import apiSlice from "./apiSlice"
 const locationsApiSlice = apiSlice.injectEndpoints ({
   endpoints: builder => ({
     getAll: builder.query({
       query: () => ({
-        url: EMAILS_URL,
+        url: LOCATIONS_URL,
         method: 'GET'
       }),
       providesTags: ['email']
