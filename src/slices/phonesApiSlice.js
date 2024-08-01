@@ -1,5 +1,5 @@
-import { PHONES_URL } from "../urls";
-import apiSlice from "./apiSlice";
+import {PHONES_URL} from "../urls"
+import apiSlice from "./apiSlice"
 const phonesApiSlice = apiSlice.injectEndpoints({
   endpoints: builder => ({
     getAll: builder.query({
@@ -105,13 +105,13 @@ const phonesApiSlice = apiSlice.injectEndpoints({
       ]
     }),
     deleteLocation: builder.mutation({
-      query: (pk, location ) => ({
+      query: pk => ({
         url: `${PHONES_URL}/${pk}/location`,
-        method: 'DELETE',
-        body: location
+        method: 'DELETE'
       }),
       invalidatesTags: [
         'contact',
+        'location',
         'phone'
       ]
     }),
@@ -135,6 +135,7 @@ const phonesApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: [
         'contact',
+        'location',
         'phone'
       ]
     }),
@@ -163,10 +164,9 @@ const phonesApiSlice = apiSlice.injectEndpoints({
       ]
     }),
     deleteContact: builder.mutation({
-      query: (pk, index, contact) => ({
+      query: (pk, index) => ({
         url: `${PHONES_URL}/${pk}/contacts/${index}`,
-        method: 'DELETE',
-        body: contact
+        method: 'DELETE'
       }),
       invalidatesTags: [
         'contact',
@@ -175,10 +175,9 @@ const phonesApiSlice = apiSlice.injectEndpoints({
       ]
     }),
     deleteContacts: builder.mutation({
-      query: (pk, contacts) => ({
+      query: pk => ({
         url: `${PHONES_URL}/${pk}/contacts`,
-        method: 'DELETE',
-        body: contacts
+        method: 'DELETE'
       }),
       invalidatesTags: [
         'contact',
@@ -210,7 +209,6 @@ const phonesApiSlice = apiSlice.injectEndpoints({
     })
   })
 })
-
 export const {
   useGetAllQuery,
   useLazyGetAllQuery,
