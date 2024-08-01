@@ -1,4 +1,4 @@
-import {PHONES_URL} from "../urls"
+import { PHONES_URL } from "../urls"
 import apiSlice from "./apiSlice"
 const phonesApiSlice = apiSlice.injectEndpoints({
   endpoints: builder => ({
@@ -7,7 +7,7 @@ const phonesApiSlice = apiSlice.injectEndpoints({
         url: PHONES_URL,
         method: 'GET'
       }),
-      prividesTags: ['phone']
+      providesTags: ['phone']
     }),
     getByPk: builder.query({
       query: pk => ({
