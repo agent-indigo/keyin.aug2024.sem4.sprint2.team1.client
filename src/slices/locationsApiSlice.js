@@ -7,7 +7,7 @@ const locationsApiSlice = apiSlice.injectEndpoints ({
         url: LOCATIONS_URL,
         method: 'GET'
       }),
-      providesTags: ['email']
+      providesTags: ['location']
     }),
     getByPk: builder.query({
       query: pk => ({
@@ -35,7 +35,7 @@ const locationsApiSlice = apiSlice.injectEndpoints ({
         url: `${LOCATIONS_URL}/${phone}`,
         method: 'GET'
       }),
-      providesTags: ['phone']
+      providesTags: ['location']
     }),
     getByVehicle: builder.query({
       query: vehicle => ({
