@@ -12,6 +12,7 @@ import Shop from './pages/Shop'
 import Cart from './pages/Cart'
 import Signup from './pages/Signup'
 import Account from './pages/Account'
+import Results from './pages/Results'
 const App = () => (
   <Provider store={store}>
     <BrowserRouter>
@@ -25,6 +26,7 @@ const App = () => (
             <Route path="/cart" element={<Cart/>}/> 
             <Route path="/signup" element={<Signup/>}/>
             <Route path="/account" element ={<Account/>}/>
+            <Route path="/results" element={<Results />}/>
           </Routes>
         </main>
         <Footer/>
