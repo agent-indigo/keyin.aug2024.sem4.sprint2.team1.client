@@ -1,4 +1,5 @@
 import {Link, useNavigate} from 'react-router-dom'
+import Promo from '../components/Promo'
 const Results = () => {
   const navigate = useNavigate()
   const exampleCarData = [
@@ -31,9 +32,7 @@ const Results = () => {
     <div className='flex justify-center items-center min-h-screen bg-[#D8D7D7]'>
       <div className='w-full max-w-4xl p-1 pt-16 space-y-8 bg-[#D8D7D7]'>
         <header className='text-center'>
-          <h1 className='text-4xl text-[#11465E]'>
-            Let's Make Your Dream Rental Car... A Reality
-          </h1>
+          <Promo/>
           <p className='text-2xl text-[#040200] mt-4'>
             Results for sample dates
           </p>

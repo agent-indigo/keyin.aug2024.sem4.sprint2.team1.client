@@ -1,7 +1,7 @@
-import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { useAddMutation } from '../slices/contactsApiSlice';
-const SignUp = () => {
+import {useAddMutation} from '../slices/contactsApiSlice'
+import {useState} from 'react'
+import {Link, useNavigate} from 'react-router-dom'
+const Signup = () => {
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -16,7 +16,6 @@ const SignUp = () => {
   })
   const navigate = useNavigate();
   const [addContact, {isLoading, isError, error}] = useAddMutation();
-
   const handleChange = event => {
     const {id, value} = event.target
     setFormData(prevState => ({
@@ -25,18 +24,20 @@ const SignUp = () => {
     }))
   }
   const handleSubmit = event => {
-    event.preventDefault();
+    event.preventDefault()
     // Add logic for handling sign up here
-      const response = addContact(formData).unwrap();
-      console.log('Form Data:', response)
-      // Assuming the sign-up process is successful
-      navigate('/my-account'); 
+    const response = addContact(formData).unwrap()
+    console.log('Form Data:', response)
+    // Assuming the sign-up process is successful
+    navigate('/my-account')
   }
   return (
     <div className='flex justify-center items-center min-h-screen bg-[#D8D7D7]'>
       <div className='w-full max-w-2xl p-10 pt-16 space-y-10 bg-[#D8D7D7]'>
         <div className='space-y-0'>
-          <h2 className='text-4xl text-[#040200] text-center'>SIGN UP</h2>
+          <h2 className='text-4xl text-[#040200] text-center'>
+            SIGN UP
+          </h2>
           <p className='text-md text-[#040200] text-center'>
             Please complete all fields below to create your account
           </p>
@@ -122,10 +123,18 @@ const SignUp = () => {
           >
             {isLoading ? 'Signing Up...' : 'Sign Up'}
           </button>
-          {isError && <p className='text-red-500'>Error: {error?.data?.message || 'Failed to sign up'}</p>}
+          {isError && (
+            <p className='text-red-500'>
+              Error: {error?.data?.message || 'Failed to sign up'}
+            </p>
+           )}
         </form>
         <p className='text-md text-center text-gray-600'>
-          Already have an account? <Link to='/login' className='text-[#5595AC] hover:underline'>
+          Already have an account?{' '}
+          <Link
+            to='/login'
+            className='text-[#5595AC] hover:underline'
+          >
             Log in here!
           </Link>.
         </p>
@@ -133,4 +142,4 @@ const SignUp = () => {
     </div>
   )
 }
-export default SignUp
+export default Signup

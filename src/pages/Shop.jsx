@@ -1,5 +1,6 @@
 import {useState} from 'react'
 import {useNavigate} from 'react-router-dom'
+import Promo from '../components/Promo'
 const Shop = () => {
   const [formData, setFormData] = useState({
     carType: '',
@@ -42,9 +43,7 @@ const Shop = () => {
     <div className='flex justify-center items-center min-h-screen bg-[#D8D7D7]'>
       <div className='w-full max-w-2xl p-10 pt-16 space-y-10 bg-[#D8D7D7]'>
         <header className='text-center'>
-          <h1 className='text-4xl text-[#11465E]'>
-            Let's Make Your Dream Rental Car... A Reality
-          </h1>
+          <Promo/>
           <p className='text-lg text-[#040200] mt-4'>
             Please complete the information below.
           </p>
