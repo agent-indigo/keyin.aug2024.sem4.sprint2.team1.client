@@ -1,3 +1,4 @@
+import {useAddMutation} from '../slices/contactsApiSlice'
 import {useState} from 'react'
 import {Link, useNavigate} from 'react-router-dom'
 const Signup = () => {
@@ -13,7 +14,8 @@ const Signup = () => {
     password: '',
     confirmPassword: '',
   })
-  const navigate = useNavigate() 
+  const navigate = useNavigate();
+  const [addContact, {isLoading, isError, error}] = useAddMutation();
   const handleChange = event => {
     const {id, value} = event.target
     setFormData(prevState => ({
@@ -24,15 +26,18 @@ const Signup = () => {
   const handleSubmit = event => {
     event.preventDefault()
     // Add logic for handling sign up here
-    console.log('Form Data:', formData)
+    const response = addContact(formData).unwrap()
+    console.log('Form Data:', response)
     // Assuming the sign-up process is successful
-    navigate('/my-account') 
+    navigate('/my-account')
   }
   return (
     <div className='flex justify-center items-center min-h-screen bg-[#D8D7D7]'>
       <div className='w-full max-w-2xl p-10 pt-16 space-y-10 bg-[#D8D7D7]'>
         <div className='space-y-0'>
-          <h2 className='text-4xl text-[#040200] text-center'>SIGN UP</h2>
+          <h2 className='text-4xl text-[#040200] text-center'>
+            SIGN UP
+          </h2>
           <p className='text-md text-[#040200] text-center'>
             Please complete all fields below to create your account
           </p>
@@ -114,9 +119,15 @@ const Signup = () => {
           <button
             type='submit'
             className='w-full p-2 text-xl text-[#5595AC] bg-[#040200] rounded focus:outline-none focus:ring-2 focus:ring-neutral-400'
+            disabled={isLoading}
           >
-            Sign Up
+            {isLoading ? 'Signing Up...' : 'Sign Up'}
           </button>
+          {isError && (
+            <p className='text-red-500'>
+              Error: {error?.data?.message || 'Failed to sign up'}
+            </p>
+           )}
         </form>
         <p className='text-md text-center text-gray-600'>
           Already have an account?{' '}
