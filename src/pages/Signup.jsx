@@ -1,6 +1,6 @@
 import {useState} from 'react'
 import {Link, useNavigate} from 'react-router-dom'
-const SignUp = () => {
+const Signup = () => {
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -119,7 +119,11 @@ const SignUp = () => {
           </button>
         </form>
         <p className='text-md text-center text-gray-600'>
-          Already have an account? <Link to='/login' className='text-[#5595AC] hover:underline'>
+          Already have an account?{' '}
+          <Link
+            to='/login'
+            className='text-[#5595AC] hover:underline'
+          >
             Log in here!
           </Link>.
         </p>
@@ -127,4 +131,4 @@ const SignUp = () => {
     </div>
   )
 }
-export default SignUp
+export default Signup
