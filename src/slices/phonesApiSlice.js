@@ -1,5 +1,5 @@
-import { PHONES_URL } from "../urls"
-import apiSlice from "./apiSlice"
+import {PHONES_URL} from '../urls'
+import apiSlice from './apiSlice'
 const phonesApiSlice = apiSlice.injectEndpoints({
   endpoints: builder => ({
     getAll: builder.query({

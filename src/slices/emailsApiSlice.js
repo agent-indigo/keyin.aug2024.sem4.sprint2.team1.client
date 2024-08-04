@@ -1,5 +1,5 @@
-import {EMAILS_URL} from "../urls"
-import apiSlice from "./apiSlice"
+import {EMAILS_URL} from '../urls'
+import apiSlice from './apiSlice'
 const emailsApiSlice = apiSlice.injectEndpoints ({
   endpoints: builder => ({
     getAll: builder.query({
