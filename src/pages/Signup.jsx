@@ -1,5 +1,6 @@
-import {useState} from 'react'
-import {Link, useNavigate} from 'react-router-dom'
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAddMutation } from '../slices/contactsApiSlice';
 const SignUp = () => {
   const [formData, setFormData] = useState({
     firstName: '',
@@ -13,7 +14,9 @@ const SignUp = () => {
     password: '',
     confirmPassword: '',
   })
-  const navigate = useNavigate() 
+  const navigate = useNavigate();
+  const [addContact, {isLoading, isError, error}] = useAddMutation();
+
   const handleChange = event => {
     const {id, value} = event.target
     setFormData(prevState => ({
@@ -22,11 +25,12 @@ const SignUp = () => {
     }))
   }
   const handleSubmit = event => {
-    event.preventDefault()
+    event.preventDefault();
     // Add logic for handling sign up here
-    console.log('Form Data:', formData)
-    // Assuming the sign-up process is successful
-    navigate('/my-account') 
+      const response = addContact(formData).unwrap();
+      console.log('Form Data:', response)
+      // Assuming the sign-up process is successful
+      navigate('/my-account'); 
   }
   return (
     <div className='flex justify-center items-center min-h-screen bg-[#D8D7D7]'>
@@ -114,9 +118,11 @@ const SignUp = () => {
           <button
             type='submit'
             className='w-full p-2 text-xl text-[#5595AC] bg-[#040200] rounded focus:outline-none focus:ring-2 focus:ring-neutral-400'
+            disabled={isLoading}
           >
-            Sign Up
+            {isLoading ? 'Signing Up...' : 'Sign Up'}
           </button>
+          {isError && <p className='text-red-500'>Error: {error?.data?.message || 'Failed to sign up'}</p>}
         </form>
         <p className='text-md text-center text-gray-600'>
           Already have an account? <Link to='/login' className='text-[#5595AC] hover:underline'>
