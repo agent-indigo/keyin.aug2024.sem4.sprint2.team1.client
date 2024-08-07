@@ -73,7 +73,7 @@ const Signup = () => {
         phone: phoneResponse.data,
         address: addressResponse.data,
       });
-      navigate("/my-account");
+      navigate("/account");
     } catch (err) {
       console.error("Failed to sign up:", err);
     }

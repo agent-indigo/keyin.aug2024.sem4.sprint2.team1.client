@@ -1,14 +1,57 @@
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+
 const Account = () => {
-  const accountInfo = {
-    firstName: 'Kyla',
-    lastName: 'Leaman',
-    email: 'kyla.leaman@keyin.com',
-    phoneNumber: '709-555-0528',
-    streetAddress: '123 Main St',
-    city: 'Paradise',
-    province: 'Newfoundland',
-    postalCode: 'A1L 0H1',
-  }
+  const { contactId } = useParams();
+  const [accountInfo, setAccountInfo] = useState({
+    first: '',
+    last: '',
+    // email: '',
+    number: '',
+    // street: '',
+    // city: '',
+    // prov: '',
+    // postal: '',
+  });
+
+useEffect(() => {
+  const fetchAccountInfo = async () => {
+    try {
+      // Fetch contact info
+      const contactResponse = await axios.get(`/contacts/15`);
+      const contact = contactResponse.data;
+
+      // // Fetch email info
+      // const emailResponse = await axios.get(`/emails/9`);
+      // const email = emailResponse.data;
+
+      // Fetch phone info
+      const phoneResponse = await axios.get(`/phones/10`);
+      const phone = phoneResponse.data;
+
+      // Fetch address info
+      const addressResponse = await axios.get(`/addresses/1`);
+      const address = addressResponse.data;
+
+      setAccountInfo({
+        first: contact.first,
+        last: contact.last,
+        // email: email.address, 
+        number: phone.number,
+        street: address.street, 
+        city: address.city, 
+        prov: address.prov, 
+        postal: address.postal, 
+      });
+    } catch (error) {
+      console.error("Failed to fetch account info:", error);
+    }
+  };
+  fetchAccountInfo();
+}, [contactId]);
+
+
   return (
     <div className='flex justify-center items-center min-h-screen bg-[#D8D7D7]'>
       <div className='w-full max-w-4xl p-10 pt-16 space-y-10 bg-[#D8D7D7]'>
@@ -19,31 +62,31 @@ const Account = () => {
           <form className='space-y-6 mt-8'>
             {[
               {
-                id: 'firstName',
+                id: 'first',
                 label: 'First Name',
-                value: accountInfo.firstName
+                value: accountInfo.first
               },
               {
-                id: 'lastName',
+                id: 'last',
                 label: 'Last Name',
-                value: accountInfo.lastName
+                value: accountInfo.last
               },
+              // {
+              //   id: 'address',
+              //   label: 'Email',
+              //   type: 'email',
+              //   value: accountInfo.address
+              // },
               {
-                id: 'email',
-                label: 'Email',
-                type: 'email',
-                value: accountInfo.email
-              },
-              {
-                id: 'phoneNumber',
+                id: 'number',
                 label: 'Phone Number',
                 type: 'tel',
-                value: accountInfo.phoneNumber
+                value: accountInfo.number
               },
               {
-                id: 'streetAddress',
+                id: 'street',
                 label: 'Street Address',
-                value: accountInfo.streetAddress
+                value: accountInfo.street
               },
               {
                 id: 'city',
@@ -51,14 +94,14 @@ const Account = () => {
                 value: accountInfo.city
               },
               {
-                id: 'province',
+                id: 'prov',
                 label: 'Province',
-                value: accountInfo.province
+                value: accountInfo.prov
               },
               {
-                id: 'postalCode',
+                id: 'postal',
                 label: 'Postal Code',
-                value: accountInfo.postalCode
+                value: accountInfo.postal
               },
             ].map(({
               id,
