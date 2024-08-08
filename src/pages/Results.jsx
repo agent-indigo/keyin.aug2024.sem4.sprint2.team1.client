@@ -45,9 +45,9 @@ const Results = () => {
   };
 
   const handleAddToCart = vehicle => {
-    const insuranceOption = selectedInsurance[vehicle.id] || 'standard';
-    const insuranceAmount = insuranceOption === 'premium' ? vehicle.premIns : vehicle.stdIns;
-  
+    const insuranceOption = selectedInsurance[vehicle.id] || 'none';
+    const insuranceAmount = insuranceOption === 'premium' ? vehicle.premIns : insuranceOption === 'standard' ? vehicle.stdIns : 0;
+    
     console.log('Navigating to Cart with:', {
       vehicle,
       insuranceOption,
