@@ -52,6 +52,52 @@ useEffect(() => {
 }, [contactId]);
 
 
+// Functions to handle editing account info
+const handleInputChange = (e) => {
+  const { id, value } = e.target;
+  setAccountInfo((prevState) => ({
+    ...prevState,
+    [id]: value,
+  }));
+};
+
+const handleEdit = async () => {
+  try {
+    await axios.put(`/contacts/${contactId}`, {
+      first: accountInfo.first,
+      last: accountInfo.last,
+    });
+
+    await axios.put(`/phones/${contactId}`, {
+      number: accountInfo.number,
+    });
+
+    await axios.put(`/addresses/${contactId}`, {
+      street: accountInfo.street,
+      city: accountInfo.city,
+      prov: accountInfo.prov,
+      postal: accountInfo.postal,
+    });
+
+    alert('Account information updated successfully');
+  } catch (error) {
+    console.error("Failed to update account info:", error);
+  }
+};
+
+// Function to handle deleting account info
+const handleDelete = async () => {
+  try {
+    await axios.delete(`/contacts/${contactId}`);
+    await axios.delete(`/phone/${contactId}`);
+    await axios.delete(`/addresses/${contactId}`);
+    alert('Account deleted successfully');
+  } catch (error) {
+    console.error("Failed to delete account:", error);
+  } 
+};
+
+
   return (
     <div className='flex justify-center items-center min-h-screen bg-[#D8D7D7]'>
       <div className='w-full max-w-4xl p-10 pt-16 space-y-10 bg-[#D8D7D7]'>
@@ -129,7 +175,23 @@ useEffect(() => {
               </div>
             ))}
           </form>
+          <div className='flex justify-center space-x-4 mt-6'>
+            <button
+              onClick={handleEdit}
+              className='w-32 px-4 py-2 text-[#5595AC] bg-[#040200] rounded'
+            >
+              Edit
+            </button>
+            <button
+              onClick={handleDelete}
+              className='w-32 px-4 py-2 text-[#5595AC] bg-[#040200] rounded'
+            >
+              Delete
+            </button>
+          </div>
         </div>
+        
+        {/* Order History Section */}
         <div>
           <h3 className='text-3xl text-[#040200] text-center'>
             MY HISTORY
