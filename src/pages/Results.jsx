@@ -48,6 +48,10 @@ const Results = () => {
     const insuranceOption = selectedInsurance[vehicle.id] || 'none';
     const insuranceAmount = insuranceOption === 'premium' ? vehicle.premIns : insuranceOption === 'standard' ? vehicle.stdIns : 0;
     
+    console.log('Selected Vehicle:', vehicle);
+    console.log('Insurance Option:', insuranceOption);
+    console.log('Insurance Amount:', insuranceAmount);
+    
     console.log('Navigating to Cart with:', {
       vehicle,
       insuranceOption,

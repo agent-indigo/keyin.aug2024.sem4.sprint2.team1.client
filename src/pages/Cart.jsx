@@ -56,7 +56,7 @@ const Cart = () => {
             <div>
               {vehicle.manufacturer} {vehicle.model} {vehicle.year}
             </div>
-            <div className="pl-2 py-8">{vehicle.rentalCompany}</div>
+            {/* <div className="pl-2 py-8">{vehicle.rentalCompany}</div> */}
             <div className="col-span-2 text-center px-6">
               <div>Rental Days: {rentalDays}</div>
             </div>
