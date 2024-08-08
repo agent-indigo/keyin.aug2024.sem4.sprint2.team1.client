@@ -5,9 +5,12 @@ import Promo from '../components/Promo';
 const Shop = () => {
   const [formData, setFormData] = useState({
     category: '',
-    agency: '', 
+    agency: '',
   });
 
+  const [pickUpDate, setPickUpDate] = useState('');
+  const [returnDate, setReturnDate] = useState('');
+  const [rentalDays, setRentalDays] = useState(0);
   const navigate = useNavigate();
 
   const handleChange = event => {
@@ -18,9 +21,22 @@ const Shop = () => {
     }));
   };
 
+  const handleDateChange = (id, value) => {
+    if (id === 'pickUpDate') {
+      setPickUpDate(value);
+    } else {
+      setReturnDate(value);
+    }
+
+    const start = new Date(pickUpDate || value);
+    const end = new Date(returnDate || value);
+    const days = Math.max((end - start) / (1000 * 60 * 60 * 24), 0);
+    setRentalDays(days);
+  };
+
   const handleSubmit = event => {
     event.preventDefault();
-    navigate('/results', { state: { formData, rentalCompanies } });
+    navigate('/results', { state: { formData, rentalDays, rentalCompanies } });
   };
 
   const carTypes = [
@@ -87,6 +103,35 @@ const Shop = () => {
                 </option>
               ))}
             </select>
+          </div>
+          <div className='flex items-center'>
+            <label className='w-1/3 text-xl text-[#040200]' htmlFor='pickUpDate'>
+              Pick Up Date:
+            </label>
+            <input
+              type='date'
+              id='pickUpDate'
+              value={pickUpDate}
+              onChange={e => handleDateChange('pickUpDate', e.target.value)}
+              className='w-2/3 p-1 ml-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-neutral-400'
+            />
+          </div>
+          <div className='flex items-center'>
+            <label className='w-1/3 text-xl text-[#040200]' htmlFor='returnDate'>
+              Return Date:
+            </label>
+            <input
+              type='date'
+              id='returnDate'
+              value={returnDate}
+              onChange={e => handleDateChange('returnDate', e.target.value)}
+              className='w-2/3 p-1 ml-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-neutral-400'
+            />
+          </div>
+          <div className='flex items-center'>
+            <p className='w-full text-xl text-[#040200] text-center'>
+              Rental Days: {rentalDays}
+            </p>
           </div>
           <div className='flex items-center justify-center'>
             <button className='w-full p-2 text-xl text-[#5595AC] bg-[#040200] rounded focus:outline-none focus:ring-2 focus:ring-neutral-400' type='submit'>

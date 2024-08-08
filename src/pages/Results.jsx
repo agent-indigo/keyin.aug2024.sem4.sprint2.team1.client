@@ -5,10 +5,16 @@ import Promo from '../components/Promo';
 const Results = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { formData } = location.state || {}; 
+  const { formData, rentalDays, rentalCompanies } = location.state || {};
+  console.log('Received in Results:', {
+    formData,
+    rentalDays,
+    rentalCompanies
+  });
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [selectedInsurance, setSelectedInsurance] = useState({});
 
   useEffect(() => {
     if (formData) {
@@ -34,6 +40,24 @@ const Results = () => {
     }
   }, [formData]);
 
+  const handleInsuranceChange = (index, value) => {
+    setSelectedInsurance(prev => ({ ...prev, [index]: value }));
+  };
+
+  const handleAddToCart = vehicle => {
+    const insuranceOption = selectedInsurance[vehicle.id] || 'standard';
+    const insuranceAmount = insuranceOption === 'premium' ? vehicle.premIns : vehicle.stdIns;
+  
+    console.log('Navigating to Cart with:', {
+      vehicle,
+      insuranceOption,
+      insuranceAmount,
+      rentalDays
+    });
+
+    navigate('/cart', { state: { vehicle, insuranceOption, insuranceAmount, rentalDays } });
+  };
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -41,11 +65,6 @@ const Results = () => {
   if (error) {
     return <div>{error}</div>;
   }
-
-  const handleAddToCart = vehicle => {
-    console.log(`Adding to cart: ${vehicle}`);
-    navigate('/cart');
-  };
 
   return (
     <div className='flex justify-center items-center min-h-screen bg-[#D8D7D7]'>
@@ -83,25 +102,29 @@ const Results = () => {
                   <td className='px-4 py-2 text-black'>{vehicle.year}</td>
                   <td className='px-4 py-2 text-black'>{vehicle.capacity}</td>
                   <td className='px-4 py-2 text-black'>{vehicle.category}</td>
-                  <td className='px-4 py-2 text-black'>{vehicle.stdRate}</td>
+                  <td className='px-4 py-2 text-black'>${vehicle.stdRate}</td>
                   <td className='px-4 py-2 text-black'>
                     <div className='flex flex-col items-center'>
-                      <span>{vehicle.premIns}</span>
+                      <span>${vehicle.premIns}</span>
                       <input
                         type='radio'
-                        name={`vehicle-${index}`}
-                        value='standard'
+                        name={`insurance-${index}`}
+                        value='premium'
+                        checked={selectedInsurance[vehicle.id] === 'premium'}
+                        onChange={() => handleInsuranceChange(vehicle.id, 'premium')}
                         className='mt-1'
                       />
                     </div>
                   </td>
                   <td className='px-4 py-2 text-black'>
                     <div className='flex flex-col items-center'>
-                      <span>{vehicle.stdIns}</span>
+                      <span>${vehicle.stdIns}</span>
                       <input
                         type='radio'
-                        name={`vehicle-${index}`}
-                        value='premium'
+                        name={`insurance-${index}`}
+                        value='standard'
+                        checked={selectedInsurance[vehicle.id] === 'standard'}
+                        onChange={() => handleInsuranceChange(vehicle.id, 'standard')}
                         className='mt-1'
                       />
                     </div>
@@ -126,4 +149,5 @@ const Results = () => {
 };
 
 export default Results;
+
 

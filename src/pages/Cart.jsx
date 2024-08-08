@@ -1,26 +1,50 @@
-import {useState} from 'react'
+import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
+
 const Cart = () => {
-  const [isInsuranceOptedIn, setIsInsuranceOptedIn] = useState(false)
-  const handleCheckboxChange = event => setIsInsuranceOptedIn(event.target.checked)
-  const cartData = {
-    car: {
-      make: 'Honda',
-      model: 'Civic',
-      year: '2024',
-      rentalCompany: 'Hertz',
-      pickupLocation: 'St. John\'s, NL',
-      pickupDate: '2024-08-18',
-      returnDate: '2024-08-26',
-      insuranceOption: '', 
-      rateOption: 'Premium Rate'
-    },
-    pricing: {
-      subtotal: '$1120',
-      insuranceCost: '$50',
-      tax: '$175.50',
-      totalDue: '$1345.50'
+  const location = useLocation();
+  const { vehicle, insuranceOption, insuranceAmount, rentalDays } = location.state || {};
+
+  console.log('Received in Cart:', {
+    vehicle,
+    insuranceOption,
+    insuranceAmount,
+    rentalDays
+  });
+
+  const [isInsuranceOptedIn, setIsInsuranceOptedIn] = useState(insuranceOption === 'premium');
+  const [pricing, setPricing] = useState({
+    subtotal: 0,
+    insuranceCost: 0,
+    tax: 0,
+    totalDue: 0,
+  });
+
+  useEffect(() => {
+    if (vehicle && rentalDays !== undefined) {
+      const rate = isInsuranceOptedIn ? vehicle.premRate : vehicle.stdRate;
+      const insuranceCost = isInsuranceOptedIn ? insuranceAmount : 0;
+      const subtotal = rate * rentalDays;
+      const tax = subtotal * 0.15; // Example tax rate of 15%
+      const totalDue = subtotal + insuranceCost + tax;
+
+      setPricing({
+        subtotal: subtotal.toFixed(2),
+        insuranceCost: insuranceCost.toFixed(2),
+        tax: tax.toFixed(2),
+        totalDue: totalDue.toFixed(2),
+      });
     }
-  }
+  }, [isInsuranceOptedIn, rentalDays, vehicle, insuranceAmount]);
+
+  const handleCheckboxChange = event => {
+    setIsInsuranceOptedIn(event.target.checked);
+  };
+
+  // if (!vehicle || rentalDays === undefined) {
+  //   return <div>Loading...</div>;
+  // }
+
   return (
     <div className='flex justify-center items-center min-h-screen bg-[#D8D7D7]'>
       <div className='w-full max-w-4xl p-10 pt-16 space-y-10 bg-[#D8D7D7]'>
@@ -32,26 +56,20 @@ const Cart = () => {
         <div className='space-y-20 mt-4 bg-[#D8D7D7] p-8 rounded'>
           <div className='grid grid-row-2 grid-flow-col space-x-12 text-2xl text-center'>
             <div>
-              {cartData.car.make}{' '}
-              {cartData.car.model}{' '}
-              {cartData.car.year}
+              {vehicle.manufacturer}{' '}
+              {vehicle.model}{' '}
+              {vehicle.year}
             </div>
             <div className='pl-2 py-8'>
-              {cartData.car.rentalCompany}
+              {vehicle.rentalCompany}
             </div>
             <div className='col-span-2 text-center px-6'>
               <div>
-                {cartData.car.pickupDate}
-              </div>
-              <div className='text-lg'>
-                to
-              </div>
-              <div>
-                {cartData.car.returnDate}
+                Rental Days: {rentalDays}
               </div>
             </div>
             <div>
-              {cartData.car.pickupLocation}
+              {vehicle.pickupLocation || 'St. John\'s, NL'}
             </div>
             <div className='flex flex-col items-start'>
               <span className='font-semibold'>
@@ -71,7 +89,7 @@ const Cart = () => {
               <span className='font-semibold'>
                 Rate:
               </span>
-              {' '}{cartData.car.rateOption}
+              {' '}{isInsuranceOptedIn ? 'Premium Rate' : 'Standard Rate'}
             </div>
           </div>
           <div className='text-2xl mt-4 grid grid-cols-2'>
@@ -79,25 +97,25 @@ const Cart = () => {
               Subtotal:
             </div>
             <div className='ml-[-180px]'>
-              {cartData.pricing.subtotal}
+              ${pricing.subtotal}
             </div>  
             <div className='font-semibold'>
               Insurance Cost:
             </div>
             <div className='ml-[-180px]'>
-              {cartData.pricing.insuranceCost}
+              ${pricing.insuranceCost}
             </div>
             <div className='font-semibold'>
               Tax:
             </div>
             <div className='ml-[-180px]'>
-              {cartData.pricing.tax}
+              ${pricing.tax}
             </div>
             <div className='font-semibold'>
               Total Due:
             </div>
             <div className='ml-[-180px]'>
-              {cartData.pricing.totalDue}
+              ${pricing.totalDue}
             </div>
           </div>
           <div className='flex items-center justify-center mt-6'>
@@ -114,6 +132,8 @@ const Cart = () => {
         </footer>
       </div>
     </div>
-  )
-}
-export default Cart
+  );
+};
+
+export default Cart;
+
