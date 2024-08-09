@@ -89,9 +89,9 @@ const Update = () => {
     <div className="flex justify-center items-center min-h-screen bg-[#D8D7D7]">
       <div className="w-full max-w-2xl p-10 pt-16 space-y-10 bg-[#D8D7D7]">
         <div className="space-y-0">
-          <h2 className="text-4xl text-[#040200] text-center">SIGN UP</h2>
+          <h2 className="text-4xl text-[#040200] text-center">Update Account</h2>
           <p className="text-md text-[#040200] text-center">
-            Please complete all fields below to create your account
+            Please complete all fields below to update your account
           </p>
         </div>
         <form className="space-y-6" onSubmit={handleSubmit}>
