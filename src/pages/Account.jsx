@@ -1,43 +1,45 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 const Account = () => {
-  const { contactId } = useParams();
+  const location = useLocation();
+  const { contactId } = location.state || {};
   const [accountInfo, setAccountInfo] = useState({
     first: '',
     last: '',
-    // email: '',
+    email: '',
     number: '',
-    // street: '',
-    // city: '',
-    // prov: '',
-    // postal: '',
+    street: '',
+    city: '',
+    prov: '',
+    postal: '',
   });
 
 useEffect(() => {
   const fetchAccountInfo = async () => {
     try {
       // Fetch contact info
-      const contactResponse = await axios.get(`/contacts/15`);
+      const contactResponse = await axios.get(`/contacts/${contactId}`);
       const contact = contactResponse.data;
 
       // // Fetch email info
-      // const emailResponse = await axios.get(`/emails/9`);
+      // const emailResponse = await axios.get(`/emails/${contactId}`);
       // const email = emailResponse.data;
 
       // Fetch phone info
-      const phoneResponse = await axios.get(`/phones/10`);
+      const phoneResponse = await axios.get(`/phones/${contactId}`);
       const phone = phoneResponse.data;
 
       // Fetch address info
-      const addressResponse = await axios.get(`/addresses/1`);
+      const addressResponse = await axios.get(`/addresses/${contactId}`);
       const address = addressResponse.data;
 
       setAccountInfo({
         first: contact.first,
         last: contact.last,
-        // email: email.address, 
+        email: contact.email,
+        // address: email.address, 
         number: phone.number,
         street: address.street, 
         city: address.city, 
@@ -117,12 +119,12 @@ const handleDelete = async () => {
                 label: 'Last Name',
                 value: accountInfo.last
               },
-              // {
-              //   id: 'address',
-              //   label: 'Email',
-              //   type: 'email',
-              //   value: accountInfo.address
-              // },
+              {
+                id: 'email',
+                label: 'Email',
+                type: 'email',
+                value: accountInfo.email
+              },
               {
                 id: 'number',
                 label: 'Phone Number',
@@ -246,7 +248,6 @@ const handleDelete = async () => {
                   123456
                 </td>
               </tr>
-              {/* Add more rows when retrieving information from db */}
             </tbody>
           </table>
         </div>

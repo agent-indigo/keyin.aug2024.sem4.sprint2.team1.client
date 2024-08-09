@@ -6,9 +6,9 @@ const Signup = () => {
   const [formData, setFormData] = useState({
     first: "",
     last: "",
+    email: "",
     active: true,
     role: "customer",
-    address: "",
     number: "",
     street: "",
     city: "",
@@ -33,52 +33,62 @@ const Signup = () => {
     try {
       console.log("Form Data before submission:", formData);
   
+      // Make the POST request to create a contact
       const contactResponse = await axios.post("/contacts", {
         first: formData.first,
         last: formData.last,
         active: formData.active,
+        email: formData.email,
         role: formData.role,
       });
   
-      //I want this to retrieve the contact fk to put it in the respective tables, but it doesn't seem to be working
-      const contactId = contactResponse.data.fk;
+      // Log the entire response to verify the structure
+      console.log("Contact Response:", contactResponse);
   
-      const emailResponse = await axios.post("/api/emails", {
-        address: formData.address,
-        category: formData.category,
-        active: formData.active,
-        contactId: contactId,
-      });
+      const href = contactResponse.data._links.self.href;
   
-      const phoneResponse = await axios.post("/api/phones", {
+      const contactId = href.substring(href.lastIndexOf('/') + 1);
+      console.log("Contact ID:", contactId);
+  
+      // const emailResponse = await axios.post("/emails", {
+      //   address: formData.address,
+      //   category: formData.category,
+      //   active: formData.active,
+      //   contact_id: contactId,
+      // });
+  
+      const phoneResponse = await axios.post("/phones", {
         number: formData.number,
         category: formData.category,
         active: formData.active,
-        contactId: contactId,
       });
   
-      const addressResponse = await axios.post("/api/addresses", {
+      const addressResponse = await axios.post("/addresses", {
         street: formData.street,
         city: formData.city,
         prov: formData.prov,
         postal: formData.postal,
         active: formData.active,
         category: formData.category,
-        contactId: contactId,
       });
+
+      const href1 = addressResponse.data._links.self.href;
+  
+      const addressId = href1.substring(href1.lastIndexOf('/') + 1);
+      console.log("Address ID:", addressId);
   
       console.log("Form Data after submission:", {
         contact: contactResponse.data,
-        email: emailResponse.data,
+        // email: emailResponse.data,
         phone: phoneResponse.data,
         address: addressResponse.data,
       });
-      navigate("/account");
+  
+      navigate('/account', { state: { contactId } });
     } catch (err) {
       console.error("Failed to sign up:", err);
     }
   };
-
   return (
     <div className="flex justify-center items-center min-h-screen bg-[#D8D7D7]">
       <div className="w-full max-w-2xl p-10 pt-16 space-y-10 bg-[#D8D7D7]">
@@ -92,7 +102,7 @@ const Signup = () => {
           {[
             { id: "first", label: "First Name" },
             { id: "last", label: "Last Name" },
-            { id: "address", label: "Email", type: "email" },
+            { id: "email", label: "Email", type: "email" },
             { id: "number", label: "Phone Number", type: "tel" },
             { id: "street", label: "Street Address" },
             { id: "city", label: "City" },
