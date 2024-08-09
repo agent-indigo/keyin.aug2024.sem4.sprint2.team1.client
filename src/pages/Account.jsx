@@ -1,9 +1,10 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Account = () => {
   const location = useLocation();
+  const navigate = useNavigate(); // Initialize navigate
   const { contactId } = location.state || {};
   const [accountInfo, setAccountInfo] = useState({
     first: '',
@@ -64,39 +65,19 @@ const handleInputChange = (e) => {
 };
 
 const handleEdit = async () => {
-  try {
-    await axios.put(`/contacts/${contactId}`, {
-      first: accountInfo.first,
-      last: accountInfo.last,
-    });
-
-    await axios.put(`/phones/${contactId}`, {
-      number: accountInfo.number,
-    });
-
-    await axios.put(`/addresses/${contactId}`, {
-      street: accountInfo.street,
-      city: accountInfo.city,
-      prov: accountInfo.prov,
-      postal: accountInfo.postal,
-    });
-
-    alert('Account information updated successfully');
-  } catch (error) {
-    console.error("Failed to update account info:", error);
-  }
+  navigate('/update', { state: { contactId } });
 };
 
 // Function to handle deleting account info
 const handleDelete = async () => {
   try {
     await axios.delete(`/contacts/${contactId}`);
-    await axios.delete(`/phone/${contactId}`);
+    await axios.delete(`/phones/${contactId}`);
     await axios.delete(`/addresses/${contactId}`);
     alert('Account deleted successfully');
   } catch (error) {
     console.error("Failed to delete account:", error);
-  } 
+  }
 };
 
 

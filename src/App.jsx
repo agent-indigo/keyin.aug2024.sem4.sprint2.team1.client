@@ -1,18 +1,19 @@
-import {BrowserRouter, Route, Routes} from 'react-router-dom'
-import {Provider} from 'react-redux'
-import {ToastContainer} from 'react-toastify'
-import store from './store'
+import { Provider } from 'react-redux'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import './App.css'
-import Header from './components/Header'
 import Footer from './components/Footer'
+import Header from './components/Header'
+import Account from './pages/Account'
+import Cart from './pages/Cart'
 import Home from './pages/Home'
 import Login from './pages/Login'
-import Shop from './pages/Shop'
-import Cart from './pages/Cart'
-import Signup from './pages/Signup'
-import Account from './pages/Account'
 import Results from './pages/Results'
+import Shop from './pages/Shop'
+import Signup from './pages/Signup'
+import Update from './pages/Update'
+import store from './store'
 const App = () => (
   <Provider store={store}>
     <BrowserRouter>
@@ -23,10 +24,11 @@ const App = () => (
             <Route path="/" element={<Home/>}/>
             <Route path="/login" element={<Login/>}/>
             <Route path="/shop" element={<Shop/>}/>
-            <Route path="/cart" element={<Cart/>}/> 
+            <Route path="/cart" element={<Cart/>}/>
             <Route path="/signup" element={<Signup/>}/>
             <Route path="/account" element ={<Account/>}/>
             <Route path="/results" element={<Results />}/>
+            <Route path="/update" element={<Update />}/>
           </Routes>
         </main>
         <Footer/>
