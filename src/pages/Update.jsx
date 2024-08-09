@@ -1,8 +1,10 @@
 import axios from "axios";
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
-const Signup = () => {
+const Update = () => {
+  const location = useLocation();
+  const { contactId } = location.state || {};
   const [formData, setFormData] = useState({
     first: "",
     last: "",
@@ -31,7 +33,7 @@ const Signup = () => {
     try {
       console.log("Form Data before submission:", formData);
   
-      const contactResponse = await axios.post("/contacts", {
+      const contactResponse = await axios.put(`/contacts/${contactId}`, {
         first: formData.first,
         last: formData.last,
         active: formData.active,
@@ -39,20 +41,14 @@ const Signup = () => {
         role: formData.role,
       });
   
-      console.log("Contact Response:", contactResponse);
-  
-      const href = contactResponse.data._links.self.href;
-  
-      const contactId = href.substring(href.lastIndexOf('/') + 1);
-      console.log("Contact ID:", contactId);
-  
-      const phoneResponse = await axios.post("/phones", {
+      const phoneResponse = await axios.put(`/phones/${contactId}`, {
+
         number: formData.number,
         category: formData.category,
         active: formData.active,
       });
   
-      const addressResponse = await axios.post("/addresses", {
+      const addressResponse = await axios.put(`/addresses/${contactId}`, {
         street: formData.street,
         city: formData.city,
         prov: formData.prov,
@@ -60,11 +56,6 @@ const Signup = () => {
         active: formData.active,
         category: formData.category,
       });
-
-      const href1 = addressResponse.data._links.self.href;
-  
-      const addressId = href1.substring(href1.lastIndexOf('/') + 1);
-      console.log("Address ID:", addressId);
   
       console.log("Form Data after submission:", {
         contact: contactResponse.data,
@@ -73,17 +64,19 @@ const Signup = () => {
       });
   
       navigate('/account', { state: { contactId } });
+      alert('Account information updated successfully');
     } catch (err) {
-      console.error("Failed to sign up:", err);
+      console.error("Failed to update account info:", err);
     }
   };
+
   return (
     <div className="flex justify-center items-center min-h-screen bg-[#D8D7D7]">
       <div className="w-full max-w-2xl p-10 pt-16 space-y-10 bg-[#D8D7D7]">
         <div className="space-y-0">
-          <h2 className="text-4xl text-[#040200] text-center">SIGN UP</h2>
+          <h2 className="text-4xl text-[#040200] text-center">Update Account</h2>
           <p className="text-md text-[#040200] text-center">
-            Please complete all fields below to create your account
+            Please complete all fields below to update your account
           </p>
         </div>
         <form className="space-y-6" onSubmit={handleSubmit}>
@@ -117,17 +110,11 @@ const Signup = () => {
             type="submit"
             className="w-full p-2 text-xl text-[#5595AC] bg-[#040200] rounded focus:outline-none focus:ring-2 focus:ring-neutral-400"
           >
-            Sign Up
+            Update Account
           </button>
         </form>
-        <p className="text-md text-center text-gray-600">
-          Already have an account?{" "}
-          <Link to="/login" className="text-[#5595AC] hover:underline">
-            Log in here
-          </Link>
-        </p>
       </div>
     </div>
   );
 };
-export default Signup;
+export default Update;

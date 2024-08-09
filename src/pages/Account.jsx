@@ -1,43 +1,38 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Account = () => {
-  const { contactId } = useParams();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { contactId } = location.state || {};
   const [accountInfo, setAccountInfo] = useState({
     first: '',
     last: '',
-    // email: '',
+    email: '',
     number: '',
-    // street: '',
-    // city: '',
-    // prov: '',
-    // postal: '',
+    street: '',
+    city: '',
+    prov: '',
+    postal: '',
   });
 
 useEffect(() => {
   const fetchAccountInfo = async () => {
     try {
-      // Fetch contact info
-      const contactResponse = await axios.get(`/contacts/15`);
+      const contactResponse = await axios.get(`/contacts/${contactId}`);
       const contact = contactResponse.data;
 
-      // // Fetch email info
-      // const emailResponse = await axios.get(`/emails/9`);
-      // const email = emailResponse.data;
-
-      // Fetch phone info
-      const phoneResponse = await axios.get(`/phones/10`);
+      const phoneResponse = await axios.get(`/phones/${contactId}`);
       const phone = phoneResponse.data;
 
-      // Fetch address info
-      const addressResponse = await axios.get(`/addresses/1`);
+      const addressResponse = await axios.get(`/addresses/${contactId}`);
       const address = addressResponse.data;
 
       setAccountInfo({
         first: contact.first,
         last: contact.last,
-        // email: email.address, 
+        email: contact.email,
         number: phone.number,
         street: address.street, 
         city: address.city, 
@@ -52,7 +47,6 @@ useEffect(() => {
 }, [contactId]);
 
 
-// Functions to handle editing account info
 const handleInputChange = (e) => {
   const { id, value } = e.target;
   setAccountInfo((prevState) => ({
@@ -62,39 +56,18 @@ const handleInputChange = (e) => {
 };
 
 const handleEdit = async () => {
-  try {
-    await axios.put(`/contacts/${contactId}`, {
-      first: accountInfo.first,
-      last: accountInfo.last,
-    });
-
-    await axios.put(`/phones/${contactId}`, {
-      number: accountInfo.number,
-    });
-
-    await axios.put(`/addresses/${contactId}`, {
-      street: accountInfo.street,
-      city: accountInfo.city,
-      prov: accountInfo.prov,
-      postal: accountInfo.postal,
-    });
-
-    alert('Account information updated successfully');
-  } catch (error) {
-    console.error("Failed to update account info:", error);
-  }
+  navigate('/update', { state: { contactId } });
 };
 
-// Function to handle deleting account info
 const handleDelete = async () => {
   try {
     await axios.delete(`/contacts/${contactId}`);
-    await axios.delete(`/phone/${contactId}`);
+    await axios.delete(`/phones/${contactId}`);
     await axios.delete(`/addresses/${contactId}`);
     alert('Account deleted successfully');
   } catch (error) {
     console.error("Failed to delete account:", error);
-  } 
+  }
 };
 
 
@@ -117,12 +90,12 @@ const handleDelete = async () => {
                 label: 'Last Name',
                 value: accountInfo.last
               },
-              // {
-              //   id: 'address',
-              //   label: 'Email',
-              //   type: 'email',
-              //   value: accountInfo.address
-              // },
+              {
+                id: 'email',
+                label: 'Email',
+                type: 'email',
+                value: accountInfo.email
+              },
               {
                 id: 'number',
                 label: 'Phone Number',
@@ -246,7 +219,6 @@ const handleDelete = async () => {
                   123456
                 </td>
               </tr>
-              {/* Add more rows when retrieving information from db */}
             </tbody>
           </table>
         </div>

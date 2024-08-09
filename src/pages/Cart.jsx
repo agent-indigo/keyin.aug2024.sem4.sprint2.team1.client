@@ -26,11 +26,11 @@ const Cart = () => {
 
   useEffect(() => {
     if (vehicle && rentalDays !== undefined) {
-      const rate = isInsuranceOptedIn ? vehicle.premRate : vehicle.stdRate;
+      const rate = vehicle.stdRate;
       const insuranceCost = isInsuranceOptedIn ? insuranceAmount : 0;
-      const subtotal = rate * rentalDays;
+      const subtotal = (rate * rentalDays) + (insuranceCost * rentalDays);
       const tax = subtotal * 0.15; 
-      const totalDue = subtotal + insuranceCost + tax;
+      const totalDue = subtotal + tax;
 
       setPricing({
         subtotal: subtotal.toFixed(2),
@@ -56,7 +56,6 @@ const Cart = () => {
             <div>
               {vehicle.manufacturer} {vehicle.model} {vehicle.year}
             </div>
-            {/* <div className="pl-2 py-8">{vehicle.rentalCompany}</div> */}
             <div className="col-span-2 text-center px-6">
               <div>Rental Days: {rentalDays}</div>
             </div>
