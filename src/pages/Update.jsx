@@ -17,8 +17,6 @@ const Update = () => {
     prov: "",
     postal: "",
     category: "customer",
-    // password: '',
-    // confirmPassword: '',
   });
   const navigate = useNavigate();
 

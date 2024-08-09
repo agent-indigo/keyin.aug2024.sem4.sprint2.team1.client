@@ -15,8 +15,6 @@ const Signup = () => {
     prov: "",
     postal: "",
     category: "customer",
-    // password: '',
-    // confirmPassword: '',
   });
   const navigate = useNavigate();
 
