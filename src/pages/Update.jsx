@@ -35,7 +35,6 @@ const Update = () => {
     try {
       console.log("Form Data before submission:", formData);
   
-      // Make the POST request to create a contact
       const contactResponse = await axios.put(`/contacts/${contactId}`, {
         first: formData.first,
         last: formData.last,
@@ -43,14 +42,6 @@ const Update = () => {
         email: formData.email,
         role: formData.role,
       });
-  
-      // // Log the entire response to verify the structure
-      // console.log("Contact Response:", contactResponse);
-  
-      // const href = contactResponse.data._links.self.href;
-  
-      // const contactId = href.substring(href.lastIndexOf('/') + 1);
-      // console.log("Contact ID:", contactId);
   
       const phoneResponse = await axios.put(`/phones/${contactId}`, {
 
@@ -67,10 +58,6 @@ const Update = () => {
         active: formData.active,
         category: formData.category,
       });
-
-      // const href1 = addressResponse.data._links.self.href;
-      // const addressId = href1.substring(href1.lastIndexOf('/') + 1);
-      // console.log("Address ID:", addressId);
   
       console.log("Form Data after submission:", {
         contact: contactResponse.data,
@@ -104,8 +91,8 @@ const Update = () => {
             { id: "city", label: "City" },
             { id: "prov", label: "Province" },
             { id: "postal", label: "Postal Code" },
-            // { id: 'password', label: 'Password', type: 'password' },
-            // { id: 'confirmPassword', label: 'Confirm Password', type: 'password' },
+            { id: 'password', label: 'Password', type: 'password' },
+            { id: 'confirmPassword', label: 'Confirm Password', type: 'password' },
           ].map(({ id, label, type = "text" }) => (
             <div key={id} className="flex items-center">
               <label htmlFor={id} className="w-1/3 text-xl text-[#040200]">

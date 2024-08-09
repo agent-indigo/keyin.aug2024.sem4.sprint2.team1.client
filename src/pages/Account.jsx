@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 const Account = () => {
   const location = useLocation();
-  const navigate = useNavigate(); // Initialize navigate
+  const navigate = useNavigate();
   const { contactId } = location.state || {};
   const [accountInfo, setAccountInfo] = useState({
     first: '',
@@ -20,19 +20,12 @@ const Account = () => {
 useEffect(() => {
   const fetchAccountInfo = async () => {
     try {
-      // Fetch contact info
       const contactResponse = await axios.get(`/contacts/${contactId}`);
       const contact = contactResponse.data;
 
-      // // Fetch email info
-      // const emailResponse = await axios.get(`/emails/${contactId}`);
-      // const email = emailResponse.data;
-
-      // Fetch phone info
       const phoneResponse = await axios.get(`/phones/${contactId}`);
       const phone = phoneResponse.data;
 
-      // Fetch address info
       const addressResponse = await axios.get(`/addresses/${contactId}`);
       const address = addressResponse.data;
 
@@ -40,7 +33,6 @@ useEffect(() => {
         first: contact.first,
         last: contact.last,
         email: contact.email,
-        // address: email.address, 
         number: phone.number,
         street: address.street, 
         city: address.city, 
@@ -55,7 +47,6 @@ useEffect(() => {
 }, [contactId]);
 
 
-// Functions to handle editing account info
 const handleInputChange = (e) => {
   const { id, value } = e.target;
   setAccountInfo((prevState) => ({
@@ -68,7 +59,6 @@ const handleEdit = async () => {
   navigate('/update', { state: { contactId } });
 };
 
-// Function to handle deleting account info
 const handleDelete = async () => {
   try {
     await axios.delete(`/contacts/${contactId}`);
