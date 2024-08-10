@@ -1,11 +1,10 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-
+import axios from 'axios'
+import {useEffect, useState} from 'react'
+import {useLocation, useNavigate} from 'react-router-dom'
 const Account = () => {
-  const location = useLocation();
-  const navigate = useNavigate();
-  const { contactId } = location.state || {};
+  const location = useLocation()
+  const navigate = useNavigate()
+  const {contactId} = location.state || {}
   const [accountInfo, setAccountInfo] = useState({
     first: '',
     last: '',
@@ -15,20 +14,16 @@ const Account = () => {
     city: '',
     prov: '',
     postal: '',
-  });
-
+  })
 useEffect(() => {
   const fetchAccountInfo = async () => {
     try {
-      const contactResponse = await axios.get(`/contacts/${contactId}`);
-      const contact = contactResponse.data;
-
-      const phoneResponse = await axios.get(`/phones/${contactId}`);
-      const phone = phoneResponse.data;
-
-      const addressResponse = await axios.get(`/addresses/${contactId}`);
-      const address = addressResponse.data;
-
+      const contactResponse = await axios.get(`/contacts/${contactId}`)
+      const contact = contactResponse.data
+      const phoneResponse = await axios.get(`/phones/${contactId}`)
+      const phone = phoneResponse.data
+      const addressResponse = await axios.get(`/addresses/${contactId}`)
+      const address = addressResponse.data
       setAccountInfo({
         first: contact.first,
         last: contact.last,
@@ -38,39 +33,26 @@ useEffect(() => {
         city: address.city, 
         prov: address.prov, 
         postal: address.postal, 
-      });
+      })
     } catch (error) {
-      console.error("Failed to fetch account info:", error);
+      console.error('Failed to fetch account info:', error)
     }
-  };
-  fetchAccountInfo();
-}, [contactId]);
-
-
-const handleInputChange = (e) => {
-  const { id, value } = e.target;
-  setAccountInfo((prevState) => ({
-    ...prevState,
-    [id]: value,
-  }));
-};
-
+  }
+  fetchAccountInfo()
+}, [contactId])
 const handleEdit = async () => {
-  navigate('/update', { state: { contactId } });
-};
-
+  navigate('/update', {state: {contactId}})
+}
 const handleDelete = async () => {
   try {
-    await axios.delete(`/contacts/${contactId}`);
-    await axios.delete(`/phones/${contactId}`);
-    await axios.delete(`/addresses/${contactId}`);
-    alert('Account deleted successfully');
+    await axios.delete(`/contacts/${contactId}`)
+    await axios.delete(`/phones/${contactId}`)
+    await axios.delete(`/addresses/${contactId}`)
+    alert('Account deleted successfully')
   } catch (error) {
-    console.error("Failed to delete account:", error);
+    console.error('Failed to delete account:', error)
   }
-};
-
-
+}
   return (
     <div className='flex justify-center items-center min-h-screen bg-[#D8D7D7]'>
       <div className='w-full max-w-4xl p-10 pt-16 space-y-10 bg-[#D8D7D7]'>
@@ -163,7 +145,6 @@ const handleDelete = async () => {
             </button>
           </div>
         </div>
-        
         {/* Order History Section */}
         <div>
           <h3 className='text-3xl text-[#040200] text-center'>

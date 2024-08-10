@@ -1,34 +1,33 @@
-import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-
+import {useState} from 'react'
+import {Link, useNavigate} from 'react-router-dom'
 const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const navigate = useNavigate();
-
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const navigate = useNavigate()
   const handleChange = event => {
-    const { id, value } = event.target;
+    const {id, value} = event.target
     if (id === 'email') {
-      setEmail(value);
+      setEmail(value)
     } else if (id === 'password') {
-      setPassword(value);
+      setPassword(value)
     }
-  };
-
+  }
   const handleSubmit = event => {
-    event.preventDefault();
-    const contactId = 92; 
-
-    console.log(`Login Data:\nEmail address: ${email}\n Password     : ${password}`);
-    
-    navigate('/account', { state: { contactId } });
-  };
-
+    event.preventDefault()
+    const contactId = 92 
+    console.log(`Login Data:\nEmail address: ${email}\n Password     : ${password}`)
+    navigate('/account', {state: {contactId}})
+  }
   return (
     <div className='flex justify-center items-center min-h-screen bg-[#D8D7D7]'>
       <div className='w-full max-w-md p-8 space-y-10 bg-white shadow-md rounded-lg'>
-        <h2 className='text-4xl text-[#040200] text-center'>LOGIN</h2>
-        <form className='space-y-6' onSubmit={handleSubmit}>
+        <h2 className='text-4xl text-[#040200] text-center'>
+          LOGIN
+        </h2>
+        <form
+          className='space-y-6'
+          onSubmit={handleSubmit}
+        >
           <div className='flex items-center'>
             <label htmlFor='email' className='w-1/3 text-xl text-[#040200]'>
               Email
@@ -43,7 +42,10 @@ const Login = () => {
             />
           </div>
           <div className='flex items-center'>
-            <label htmlFor='password' className='w-1/3 text-xl text-[#040200]'>
+            <label
+              htmlFor='password'
+              className='w-1/3 text-xl text-[#040200]'
+            >
               Password
             </label>
             <input
@@ -64,13 +66,15 @@ const Login = () => {
         </form>
         <p className='text-md text-center text-gray-600'>
           Don't have an account?{' '}
-          <Link to='/signup' className='text-[#5595AC] hover:underline'>
+          <Link
+            to='/signup'
+            className='text-[#5595AC] hover:underline'
+          >
             Sign up here!
           </Link>.
         </p>
       </div>
     </div>
-  );
-};
-
-export default Login;
+  )
+}
+export default Login
