@@ -1,6 +1,6 @@
-import { Provider } from 'react-redux'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import { ToastContainer } from 'react-toastify'
+import {Provider} from 'react-redux'
+import {BrowserRouter, Route, Routes} from 'react-router-dom'
+import {ToastContainer} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import './App.css'
 import Footer from './components/Footer'
@@ -21,14 +21,38 @@ const App = () => (
         <Header/>
         <main className="flex-grow">
           <Routes>
-            <Route path="/" element={<Home/>}/>
-            <Route path="/login" element={<Login/>}/>
-            <Route path="/shop" element={<Shop/>}/>
-            <Route path="/cart" element={<Cart/>}/>
-            <Route path="/signup" element={<Signup/>}/>
-            <Route path="/account" element ={<Account/>}/>
-            <Route path="/results" element={<Results />}/>
-            <Route path="/update" element={<Update />}/>
+            <Route
+              path="/"
+              element={<Home/>}
+            />
+            <Route
+              path="/login"
+              element={<Login/>}
+            />
+            <Route
+              path="/shop"
+              element={<Shop/>}
+            />
+            <Route
+              path="/cart"
+              element={<Cart/>}
+            />
+            <Route
+              path="/signup"
+              element={<Signup/>}
+            />
+            <Route
+              path="/account"
+              element ={<Account/>}
+            />
+            <Route
+              path="/results"
+              element={<Results />}
+            />
+            <Route
+              path="/update"
+              element={<Update />}
+            />
           </Routes>
         </main>
         <Footer/>

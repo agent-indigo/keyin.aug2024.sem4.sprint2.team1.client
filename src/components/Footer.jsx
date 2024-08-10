@@ -1,5 +1,10 @@
 import {Link} from 'react-router-dom'
-import {FaFacebook, FaInstagram, FaYoutube, FaTiktok} from 'react-icons/fa'
+import {
+  FaFacebook,
+  FaInstagram,
+  FaYoutube,
+  FaTiktok
+} from 'react-icons/fa'
 const Footer = () => (
   <footer className='bg-[#040200] text-[#D8D7D7] p-4'>
     <div className='flex justify-between items-center'>
